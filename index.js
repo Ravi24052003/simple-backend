@@ -7,6 +7,8 @@ const cors = require("cors");
 
 const server = express();
 
+server.use(cors());
+
 //db connection
 main().catch(err => console.log(err));
 async function main() {
@@ -17,10 +19,9 @@ async function main() {
 
 
 
-server.use(cors());
 server.use(express.json());  
 server.use(morgan('default')); 
-server.use('/products',cors(), productRouter); 
+server.use('/products', productRouter); 
 
 
 
