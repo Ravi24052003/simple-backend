@@ -20,7 +20,7 @@ async function main() {
 server.use(cors());
 server.use(express.json());  
 server.use(morgan('default')); 
-server.use('/products', productRouter); 
+server.use('/products',cors(), productRouter); 
 
 
 
