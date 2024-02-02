@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // Schema
 const productSchema = new mongoose.Schema({
-    title : {type: String, required: true, unique: true},
+    title : {type: String, required: true},
     description : String,
     price : {type: Number, min: [0, 'wrong price'], required: true},
     discountPercentage : {type: Number, min: [0, 'wrong min discount'], max: [50, 'wrong max discount']},
