@@ -16,7 +16,7 @@ exports.createProduct = async (req, res)=>{
       res.json(data);
   } catch (error) {
     console.log("erorore",error.message);
-    res.json(error);
+    res.status(400).json(error);
   }
  
   }
@@ -48,11 +48,25 @@ exports.createProduct = async (req, res)=>{
     exports.updateProduct = async (req, res)=>{ 
       console.log(req.params)
       try {
+        const obj = {};
+        if(req.body?.price < 1){
+         obj.priceError = "price should not be below 1"
+        }
+        if(req.body?.discountPercentage < 0){
+          obj.discountError = "discount can't be less than 0%"
+        }
+        if(req.body?.discountPercentage > 50){
+          obj.discountError = "discount can't be above 50%"
+        }
+        if(obj.priceError || obj.discountError){
+          res.status(400).json(obj);
+          return;
+        }
         const product = await Product.findOneAndUpdate({'_id': req.params.id}, req.body, {new: true});
         res.json(product);
       } catch (error) {
        console.log(error);
-       res.json(error) 
+       res.status(400).json(error);
       }
       }
   
